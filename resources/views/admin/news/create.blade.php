@@ -12,6 +12,7 @@
             <div class="col-md-8 mx-auto">
                 <h2>ニュース新規作成</h2>
                  <form action="{{ route('admin.news.create') }}" method="post" enctype="multipart/form-data">
+                     
                     @if (count($errors) > 0)
                         <ul>
                             @foreach($errors->all() as $e)
@@ -40,8 +41,8 @@
                     @csrf
                     <input type="submit" class="btn btn-primary" value="更新">
                 </form>
-                            </div>
-                      </div>
-                    </div>
-                @endsection
+            </div>
+        </div>
+    </div>
+@endsection
                 

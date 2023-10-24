@@ -10,7 +10,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         {{-- 各ページごとにtitleタグを入れるために@yieldで空けておきます。 --}}
-        <title>@section('title', 'プロフィール')</title>
+        <title>@yield('title')</title>
 
         <!-- Scripts -->
          {{-- Laravel標準で用意されているJavascriptを読み込みます --}}
@@ -24,7 +24,7 @@
         {{-- Laravel標準で用意されているCSSを読み込みます --}}
         <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
         {{-- この章の後半で作成するCSSを読み込みます --}}
-         <link href="{{ secure_asset('css/profile.css') }}" rel="stylesheet">
+        <link href="{{ secure_asset('css/admin.css') }}" rel="stylesheet">
     </head>
     <body>
         <div id="app">
@@ -46,6 +46,30 @@
 
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav">
+                         <!-- Authentication Links -->
+                         {{-- ログインしていなかったらログイン画面へのリンクを表示 --}}
+                        @guest
+                            <li><a class="nav-link" href="{{ route('login') }}">{{ __('messages.login') }}</a></li>
+                        {{-- ログインしていたらユーザー名とログアウトボタンを表示 --}}
+                        @else
+                            <li class="nav-item dropdown">
+                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                 </a>
+
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('messages.logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                            @endguest    
                         </ul>
                     </div>
                 </div>
@@ -54,44 +78,7 @@
 
             <main class="py-4">
                 {{-- コンテンツをここに入れるため、@yieldで空けておきます。 --}}
-                @section('content')
-                    <div class="container">
-                         <div class="row">
-                            <div class="col-md-8 mx-auto">
-                                <h2>氏名(name)</h2>
-                                 <form action="{{ route('admin.profile.create') }}" method="post" enctype="multipart/form-data">
-                    @if (count($errors) > 0)
-                        <ul>
-                            @foreach($errors->all() as $e)
-                                <li>{{ $e }}</li>
-                            @endforeach
-                        </ul>
-                    @endif
-                    <div class="form-group row">
-                        <label class="col-md-2">性別(gender)</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" name="title" value="{{ old('title') }}">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-2">趣味(hobby)</label>
-                        <div class="col-md-10">
-                            <textarea class="form-control" name="body" rows="20">{{ old('body') }}</textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-2">自己紹介(introduction)</label>
-                        <div class="col-md-10">
-                            <input type="file" class="form-control-file" name="image">
-                        </div>
-                    </div>
-                    @csrf
-                    <input type="submit" class="btn btn-primary" value="更新">
-                </form>
-            　　　　　　　　　　　　</div>
-      　　　　　　　　　　　　　　　  </div>
-   　　　　　　　　　　　　　　　 </div>
-　　　　　　　　@endsection
+                @yield('content')
             </main>
         </div>
     </body>

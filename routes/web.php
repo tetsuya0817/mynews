@@ -12,17 +12,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+use App\Http\Controllers\Admin\ProfileController;
+Route::controller(ProfileController::class)->prefix('admin')->group(function() {
+    Route::get('profile/create', 'add');
 });
-use App\Http\Controllers\Admin\NewsController;
-
-Route::controller(NewsController::class)->prefix('admin')->name('admin.')->middleware('auth')->group(function () {
-    Route::get('profile/create', 'add')->name('profile.add');
-    Route::post('profile/create', 'create')->name('profile.create');
+Route::controller(ProfileController::class)->prefix('admin')->group(function() {
+    Route::get('news/edit', 'edit');
 });
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
