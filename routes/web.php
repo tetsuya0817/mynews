@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+Route::get('/', function () {
+    return view('welcome');
+});
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,5 +19,8 @@ Route::controller(ProfileController::class)->prefix('admin')->group(function() {
     Route::get('profile/create', 'add');
 });
 Route::controller(ProfileController::class)->prefix('admin')->group(function() {
-    Route::get('news/edit', 'edit');
+    Route::get('profile/edit', 'edit');
 });
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
