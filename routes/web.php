@@ -15,12 +15,14 @@ Route::get('/', function () {
 |
 */
 use App\Http\Controllers\Admin\ProfileController;
-Route::controller(ProfileController::class)->prefix('admin')->group(function() {
-    Route::get('profile/create', 'add');
+Route::controller(ProfileController::class)->prefix('admin')->middleware('auth')->group(function() {
+    Route::get('profile/create', 'add')->name('profile.add');
+    Route::post('profile/create', 'create')->name('profile.create'); 
 });
 Route::controller(ProfileController::class)->prefix('admin')->group(function() {
-    Route::get('profile/edit', 'edit');
+    Route::get('profile/edit', 'edit')->name('profile.add');
+    Route::post('profile/update', 'update')->name('profile.update');
 });
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\profileController::class, 'index'])->name('home');
