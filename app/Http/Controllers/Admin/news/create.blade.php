@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {{-- layouts/admin.blade.phpを読み込む --}}
 @extends('layouts.admin')
 
