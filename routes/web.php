@@ -14,6 +14,13 @@ Route::get('/', function () {
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers\Admin\NewsController;
+Route::controller(NewsController::class)->prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    Route::get('news/create', 'add')->name('news.add');
+    Route::post('news/create', 'create')->name('news.create');
+});
+
+
 use App\Http\Controllers\Admin\ProfileController;
 Route::controller(ProfileController::class)->prefix('admin')->middleware('auth')->group(function() {
     Route::get('profile/create', 'add')->name('profile.add');
@@ -25,4 +32,4 @@ Route::controller(ProfileController::class)->prefix('admin')->group(function() {
 });
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\profileController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\ProfileController::class, 'index'])->name('home');
