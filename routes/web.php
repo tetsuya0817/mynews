@@ -33,4 +33,8 @@ Route::controller(ProfileController::class)->prefix('admin')->group(function() {
 });
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\ProfileController::class, 'index'])->name('home');
+use App\Http\Controllers\NewsController as PublicNewsController;
+Route::get('/', [PublicNewsController::class, 'index'])->name('profile.index');
+
+use App\Http\Controllers\ProfileController as PublicProfileController;
+Route::get('/', [PublicProfileController::class, 'index'])->name('profile.index');
