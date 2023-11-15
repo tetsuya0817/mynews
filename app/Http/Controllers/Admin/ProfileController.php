@@ -16,7 +16,7 @@ class ProfileController extends Controller
         return view('admin.profile.create');
     }
     
-     public function create()
+     public function create(Request $request)
     {
         return redirect('admin/profile/create');
     }
@@ -51,6 +51,7 @@ class ProfileController extends Controller
         // データベースに保存する
         $news->fill($form);
         $news->save();
-        return redirect('admin/profile/edit');
+        
+        return redirect('admin/profile/create');
     }
 }

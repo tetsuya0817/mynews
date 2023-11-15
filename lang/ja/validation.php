@@ -167,10 +167,7 @@ return [
 
     'attributes' => [
         'title' => 'タイトル',
-        'body' => '本文'
-        'name' => '名前'
-        'hobby' => '趣味'
-        'introduction' => '自己紹介'
+        'body' => '本文',
     ],
 
 ];
